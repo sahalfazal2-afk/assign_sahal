@@ -9,7 +9,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     paddingHorizontal: moderateScale(20),
-    paddingVertical: moderateScale(20),
+    paddingVertical: moderateScale(15),
   },
   scrollView: { backgroundColor: colors.backgroundWhite, flexGrow: 1 },
   profileCard: {

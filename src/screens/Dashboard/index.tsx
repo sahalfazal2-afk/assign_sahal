@@ -10,7 +10,8 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MainStackParamList } from '@navigations/navigationScreenParams';
 import { getUsersListingApi } from '@services/users.api';
 import { EmptyScreen } from '@static';
-import { Loader } from '@shared';
+import { AppText, Loader } from '@shared';
+import { useAuth } from '@hooks/useAuth';
 
 type Props = NativeStackScreenProps<MainStackParamList, 'DASHBOARD'>;
 
@@ -23,8 +24,9 @@ type DashboardItem = {
 };
 
 const DashboardScreen: FC<Props> = () => {
+  const { logout } = useAuth();
+  const { Search, Logout } = images;
   const { top } = useSafeAreaInsets();
-  const { Search } = images;
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
   const [data, setData] = useState<DashboardItem[]>([]);
@@ -99,6 +101,12 @@ const DashboardScreen: FC<Props> = () => {
   return (
     <View style={[{ paddingTop: top }, styles.container]}>
       <Loader visible={loading} />
+
+      <View style={styles.header}>
+        <View style={styles.emptyView} />
+        <AppText label="User Listing" type="heading" color={colors.black} />
+        <Logout height={25} width={25} onPress={logout} />
+      </View>
       <View style={styles.searchInputContainer}>
         <TextInput
           value={search}
@@ -114,7 +122,6 @@ const DashboardScreen: FC<Props> = () => {
         />
         <Search />
       </View>
-
       <FlatList
         data={data}
         onRefresh={onRefresh}
