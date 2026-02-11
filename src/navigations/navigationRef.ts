@@ -1,0 +1,72 @@
+import {
+  CommonActions,
+  createNavigationContainerRef,
+  DrawerActions,
+  StackActions,
+} from '@react-navigation/native';
+
+export const navigationRef = createNavigationContainerRef();
+
+export async function navigate(routeName: string, params?: object) {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(CommonActions.navigate(routeName, params));
+  }
+}
+
+export async function replace(routeName: string, params?: object) {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.replace(routeName, params));
+  }
+}
+
+export async function navigateAndReset(routeName: string) {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [{ name: routeName }],
+      }),
+    );
+  }
+}
+
+export async function goBack() {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(CommonActions.goBack());
+  }
+}
+
+export async function push(routeName: string, params?: object) {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.push(routeName, params));
+  }
+}
+
+export async function pop(count?: number) {
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(StackActions.pop(count));
+  }
+}
+
+export async function prepareNavigation() {
+  navigationRef.isReady();
+}
+
+// 🔹 Track which tab is currently active
+export let lastActiveTab: string | null = null;
+
+export const setLastActiveTab = (tabName: string) => {
+  lastActiveTab = tabName;
+};
+
+export const openDrawer = () => {
+  navigationRef.isReady();
+  if (navigationRef.isReady()) {
+    navigationRef.dispatch(DrawerActions.openDrawer());
+  }
+};

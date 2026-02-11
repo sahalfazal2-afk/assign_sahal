@@ -1,8 +1,122 @@
 {
   "extends": "@react-native/typescript-config",
   "compilerOptions": {
-    "types": ["jest"],
+    "baseUrl": ".",
+    "paths": {
+      // Images
+      "@images": [
+        "src/assets/images"
+      ],
+      "@images/*": [
+        "src/assets/images*"
+      ],
+      // Assets
+      "@assets": [
+        "src/assets"
+      ],
+      "@assets/*": [
+        "src/assets/*"
+      ],
+      // Static Components
+      "@static": [
+        "src/components/static"
+      ],
+      "@static/*": [
+        "src/components/static/*"
+      ],
+      // Shared Components
+      "@shared": [
+        "src/components/shared"
+      ],
+      "@shared/*": [
+        "src/components/shared/*"
+      ],
+      // Listing Components
+      "@listing": [
+        "src/components/listing"
+      ],
+      "@listing/*": [
+        "src/components/listing/*"
+      ],
+      // Components
+      "@components": [
+        "src/components"
+      ],
+      "@components/*": [
+        "src/components/*"
+      ],
+      // Core
+      "@core": [
+        "src/core"
+      ],
+      "@core/*": [
+        "src/core/*"
+      ],
+      // Helpers
+      "@helpers": [
+        "src/helpers"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ],
+      // Hooks
+      "@hooks": [
+        "src/hooks"
+      ],
+      "@hooks/*": [
+        "src/hooks/*"
+      ],
+      // Navigations
+      "@navigations": [
+        "src/navigations"
+      ],
+      "@navigations/*": [
+        "src/navigations/*"
+      ],
+      // Screens
+      "@screens": [
+        "src/screens"
+      ],
+      "@screens/*": [
+        "src/screens/*"
+      ],
+      // Services
+      "@services": [
+        "src/services"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      // Metrics
+      "@metrics": [
+        "src/utils/metrics"
+      ],
+      "@metrics/*": [
+        "src/utils/metrics/*"
+      ],
+      // Yup Schemas
+      "@yupSchemas": [
+        "src/utils/yupSchemas"
+      ],
+      "@yupSchemas/*": [
+        "src/utils/yupSchemas/*"
+      ],
+      // Utils
+      "@utils": [
+        "src/utils"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+    }
   },
-  "include": ["**/*.ts", "**/*.tsx"],
-  "exclude": ["**/node_modules", "**/Pods"]
+  "include": [
+    "**/*.ts",
+    "**/*.tsx",
+    "src/core/store.ts"
+  ],
+  "exclude": [
+    "**/node_modules",
+    "**/Pods"
+  ]
 }

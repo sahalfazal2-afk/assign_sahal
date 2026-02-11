@@ -1,97 +1,63 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+## Assignment (React Native)
 
-# Getting Started
+This repository contains a React Native application bootstrapped with the React Native CLI and written in TypeScript.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+### Setup
 
-## Step 1: Start Metro
+Prerequisites:
+- Node.js (>=20 recommended)
+- Yarn (preferred) or npm
+- Watchman (macOS recommended)
+- JDK 11+ (for Android builds)
+- Android Studio with an Android SDK and an emulator or device
+- Xcode (for iOS builds on macOS)
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+Quick setup commands (from project root):
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+```bash
+yarn install
+# macOS / iOS only: install CocoaPods and pods
+cd ios && bundle install && bundle exec pod install && cd ..
+yarn start       # starts Metro
+yarn android     # build + install on Android device/emulator
+yarn ios         # build + run on iOS simulator (macOS only)
 
-```sh
-# Using npm
-npm start
-
-# OR using Yarn
-yarn start
 ```
 
-## Step 2: Build and run your app
+Notes:
+- If you encounter native dependency issues on iOS, run `bundle exec pod install` inside the `ios/` folder. If CocoaPods is not installed system-wide, use Bundler as shown above.
+- For Android, ensure `ANDROID_HOME` or `ANDROID_SDK_ROOT` is set and the emulator/device is available.
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
+### Key technical decisions & tradeoffs
 
-### Android
+- **React Native + TypeScript**: chosen for fast cross-platform development and strong typing. Tradeoff: some native features require bridging and extra platform-specific work.
 
-```sh
-# Using npm
-npm run android
+- **Project structure (features/screens/services/utils)**: keeps UI, navigation, and services decoupled for clarity and easier testing. Tradeoff: initial boilerplate but better long-term maintainability.
 
-# OR using Yarn
-yarn android
-```
+- **Navigation**: `react-navigation` (assumed). Provides flexible stacks.
 
-### iOS
+- **State management**: lightweight approach using React state and hooks for most screens (scoped state). Tradeoff: fewer moving parts and easier onboarding, but may need migration to Redux/Zustand for large-scale shared state or complex caching.
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
+- **API layer**: centralized services (see `src/services`) to isolate network logic. Tradeoff: slight upfront structure cost. benefits include easier testing and retries.
 
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
+- **Authentication Management**: The app uses token-based authentication. On app launch, checks if a valid token exists in AsyncStorage. Tradeoff: If a token is found, the user is considered authenticated and navigates directly to the MainNavigator (protected screens). If no token is found, the AuthNavigator (login/signup screens) is shown
 
-```sh
-bundle install
-```
+- **Assets & icons**: vector icons and a centralized assets folder for reusable images/fonts. Tradeoff: includes native linking or pod updates on some icon libraries.
+=
 
-Then, and every time you update your native dependencies, run:
+### What I would improve with more time
 
-```sh
-bundle exec pod install
-```
+- **Add E2E tests**: integrate Detox or Playwright to cover sign-in flows, navigation, and native integrations.
+- **CI/CD pipeline**: add GitHub Actions (or similar) for automated linting, tests, building Android/iOS artifacts, and deploying staging builds (with Fastlane for iOS/Android releases).
+- **Performance profiling & optimizations**: measure slow screens, reduce re-renders, and optimize large lists with proper keying and memoization.
+- **Stronger offline support & caching**: add a caching layer (e.g., react-query or custom cache) and offline fallbacks for network failure scenarios.
+- **Refactor state to a scalable solution**: evaluate Redux Toolkit or Zustand if shared global state grows more complex.
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
 
-```sh
-# Using npm
-npm run ios
+### Quick references
 
-# OR using Yarn
-yarn ios
-```
+- App entry: `App.tsx`
+- Navigation: `src/navigations/` (mainNavigator, authNavigator)
+- Screens: `src/screens/`
+- Services / API: `src/services/`
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
-
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
-
-## Step 3: Modify your app
-
-Now that you have successfully run the app, let's make changes!
-
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
-
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
-
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
